@@ -9,7 +9,7 @@ pipeline {
       stage('checkout') {
            steps {
              
-                git branch: 'master', url: 'https://github.com/Kempegowda-bu/CI-CD-using-Docker.git'
+                git branch: 'master', url: 'https://github.com/Jeevan-2/CI-CD-using-Docker.git'
              
           }
         }
@@ -25,8 +25,8 @@ pipeline {
            steps {
               
                 sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp kempegowda/project:latest'
-                //sh 'docker tag samplewebapp nikhilnidhi/samplewebapp:$BUILD_NUMBER'
+                sh 'docker tag samplewebapp:latest Jeevan-2/project:latest'
+                //sh 'docker tag samplewebapp:latest Jeevan-2/samplewebapp:$BUILD_NUMBER'
                
           }
         }
@@ -35,8 +35,8 @@ pipeline {
           
             steps {
         withDockerRegistry([ credentialsId: "dock", url: "" ]) {
-          sh  'docker push kempegowda/project:latest'
-        //  sh  'docker push nikhilnidhi/samplewebapp:$BUILD_NUMBER' 
+          sh  'docker push Jeevan-2/project:latest'
+        //  sh  'docker push Jeevan-2/samplewebapp:$BUILD_NUMBER' 
         }
                   
           }
@@ -46,17 +46,17 @@ pipeline {
              
             steps 
 			{
-                sh "docker run -d -p 8003:8080 kempegowda/project"
+                sh "docker run -d -p 8003:8080 Jeevan-2/project"
  
             }
         }
- stage('Run Docker container on remote hosts') {
+ //stage('Run Docker container on remote hosts') {
              
-            steps {
-                sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 8003:8080 nikhilnidhi/samplewebapp"
+            //steps {
+                //sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 8003:8080 Jeevan-2/samplewebapp"
  
-            }
-        }
+           // }
+      //  }
     }
 	}
     
