@@ -25,8 +25,8 @@ pipeline {
            steps {
               
                 sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp:latest Jeevan-2/samplewebapp:latest'
-                //sh 'docker tag samplewebapp:latest Jeevan-2/samplewebapp:$BUILD_NUMBER'
+                sh 'docker tag samplewebapp:latest jeevankiran/samplewebapp:latest'
+                //sh 'docker tag samplewebapp:latest jeevankiran/samplewebapp:$BUILD_NUMBER'
                
           }
         }
@@ -35,8 +35,8 @@ pipeline {
           
             steps {
         withDockerRegistry([ credentialsId: "dock", url: "" ]) {
-          sh  'docker push Jeevan-2/samplewebapp:latest'
-        //  sh  'docker push Jeevan-2/samplewebapp:$BUILD_NUMBER' 
+          sh  'docker push jeevankiran/samplewebapp:latest'
+        //  sh  'docker push jeevankiran/samplewebapp:$BUILD_NUMBER' 
         }
                   
           }
@@ -46,14 +46,14 @@ pipeline {
              
             steps 
 			{
-                sh "docker run -d -p 8003:8080 Jeevan-2/project"
+                sh "docker run -d -p 8003:8080 jeevankiran/project"
  
             }
         }
  //stage('Run Docker container on remote hosts') {
              
             //steps {
-                //sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 8003:8080 Jeevan-2/samplewebapp"
+                //sh "docker -H ssh://jenkins@172.31.28.25 run -d -p 8003:8080 jeevankiran/samplewebapp"
  
            // }
       //  }
