@@ -16,7 +16,7 @@ pipeline {
 	 stage('Execute Maven') {
            steps {
              
-                sh 'mvn package'             
+                sh 'mvn clean package'             
           }
         }
         
@@ -24,9 +24,10 @@ pipeline {
   stage('Docker Build and Tag') {
            steps {
               
-                sh 'docker build -t samplewebapp:latest .' 
-                sh 'docker tag samplewebapp:latest jeevankiran/samplewebapp:latest'
-                //sh 'docker tag samplewebapp:latest jeevankiran/samplewebapp:$BUILD_NUMBER'
+                //sh 'docker build -t samplewebapp:latest .' 
+                //sh 'docker tag samplewebapp:latest jeevankiran/samplewebapp:latest'
+		sh 'docker build -t samplewebapp:V1 .' 
+                sh 'docker tag samplewebapp:V1 jeevankiran/samplewebapp:$BUILD_NUMBER'
                
           }
         }
@@ -35,8 +36,8 @@ pipeline {
           
             steps {
         withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-          sh  'docker push jeevankiran/samplewebapp:latest'
-        //  sh  'docker push jeevankiran/samplewebapp:$BUILD_NUMBER' 
+          // sh  'docker push jeevankiran/samplewebapp:latest'
+          sh  'docker push jeevankiran/samplewebapp:$BUILD_NUMBER' 
         }
                   
           }
